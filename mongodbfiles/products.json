@@ -1,0 +1,2 @@
+{"_id":{"$oid":"5ef5950c3585d23cfc65a4d1"},"useridnumber":{"$oid":"5ef594f53585d23cfc65a4d0"},"productname":"facebook","productdetails":"fb blue ","producturlimage":"facebook.png"}
+{"_id":{"$oid":"5ef595c43585d23cfc65a4d3"},"useridnumber":{"$oid":"5ef595393585d23cfc65a4d2"},"productname":"chatapp","productdetails":"for chatting purpose","producturlimage":"chatapp.jpeg"}

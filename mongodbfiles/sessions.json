@@ -1,0 +1,1 @@
+{"_id":"e9hfekExpwPAKSz3uLL5_XtFXy21f4bj","expires":{"$date":{"$numberLong":"1594362431778"}},"session":{"cookie":{"originalMaxAge":null,"expires":null,"secure":null,"httpOnly":true,"domain":null,"path":"/","sameSite":null},"isLoggedin":true,"currUserId":{"$oid":"5ef595393585d23cfc65a4d2"}}}
