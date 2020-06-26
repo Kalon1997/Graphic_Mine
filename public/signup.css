@@ -1,0 +1,24 @@
+body {
+ background-image: url("images/signup.jpg");
+ opacity: 0.9;
+}
+.labels
+{
+  color: white;
+  text-decoration: underline;
+  line-height: 10vh;
+  text-shadow: 1.5px 1.5px green;
+  font-size: 25px;
+}
+.custombtn
+{
+  position: relative;
+  left: 10rem;
+  top: 2rem;
+}
+.custombtn2
+{
+  position: relative;
+  left: 11rem;
+  top: 2rem;
+}

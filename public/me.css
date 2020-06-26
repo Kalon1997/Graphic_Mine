@@ -1,0 +1,38 @@
+/* .flex-container
+{
+  display: flex;
+  display: inline;
+}
+.profile
+{
+  line-height: 80px
+}
+.description
+{
+  background-color: #323232;
+  height: 350px;
+
+  color: white;
+} */
+
+
+
+
+
+
+.header
+{
+  background-color: #27496d;
+}
+.header-first-row
+{
+  padding: 3rem;
+}
+.feed-first-row
+{
+  padding: 2rem;
+}
+.feed
+{
+  background-color: white;
+}
