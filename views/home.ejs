@@ -21,7 +21,7 @@
     <!-- <div class="theme"> -->
      <!-- style = "background-color: #e3f2fd;" -->
     <nav class="navbar navv navbar-expand-sm  ">
-      <a href="#" class="navbar-brand graphicmine">Graphic_Mine</a>
+      <a href="/" class="navbar-brand graphicmine">Graphic_Mine</a>
        <!-- <img src="\images\pplogo.png" class="pplogo" alt="Site logo"> -->
       <button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
         <span class="navbar-toggler-icon"></span>
@@ -70,12 +70,14 @@
 
   </div>
 
+  <% if (!isAuthed) { %>
   <div>
     <form class="btn-padding" action="/signup" method="GET">
-      <button type="submit" class=" btn-padding adding-radius padding-titles btn-primary btn-lg btn btn-round-lg joinow"><h3>Join Now</h3></button>
+      <!-- <button type="submit" class=" btn-padding adding-radius padding-titles btn-primary btn-lg btn btn-round-lg joinow"><h3>Join Now</h3></button> -->
+      <button type="submit" class="btn btn-outline-success adding-radius padding-titles btn-padding btn-lg btn-round-lg joinow"><h3>Join Now</h3></button>
   </form>
   </div>
-
+  <% } %>
   <!-- <form class="search" action="" method="">
     <input type="text" name="" value="" placeholder="" class="search_box">
   </form> -->
@@ -101,37 +103,57 @@
   <div class="row">
     <div class="col col-lg-3">
       <div class="card">
-        <img class="card-img-top" src="images/opensrc.png" alt="">
+        <img class="card-img-top" src="images/flatphoto.png" alt="">
         <div class="card-body">
-            <h4 class="card-title">Open Source</h4>
-            <p class="card-text">Search for the exact type of project with filters viz. language, title, date, etc.</p>
+            <h4 class="card-title">Photos</h4>
+            <p class="card-text">Search your suitible photos and contribute</p>
+        </div>
+        <div>
+          <form action="/photos" method="GET">
+            <button type="submit" class="btn btn-primary">Take me there</button>
+          </form>
         </div>
       </div>
     </div>
     <div class="col col-lg-3">
       <div class="card">
-        <img class="card-img-top" src="images/forum.png" alt="">
+        <img class="card-img-top" src="images/flatcartoon.png" alt="">
         <div class="card-body">
-              <h4 class="card-title">Code Forum</h4>
-            <p class="card-text">agram bagram</p>
+              <h4 class="card-title">Cartoons</h4>
+            <p class="card-text">Search your suitible cartoons and contribute</p>
+        </div>
+        <div>
+          <form action="" post="GET">
+            <button type="button" class="btn btn-primary">Take me there</button>
+          </form>
         </div>
       </div>
     </div>
     <div class="col col-lg-3">
       <div class="card">
-        <img class="card-img-top" src="images/exhibit.png" alt="">
+        <img class="card-img-top" src="images/flatillus.png" alt="">
         <div class="card-body">
-            <h4 class="card-title">Project Exhibition</h4>
-            <p class="card-text">agram bagram</p>
+            <h4 class="card-title">Illustrations</h4>
+            <p class="card-text">Search your suitible illustrations and contribute</p>
+        </div>
+        <div>
+          <form action="" post="GET">
+            <button type="button" class="btn btn-primary">Take me there</button>
+          </form>
         </div>
       </div>
     </div>
     <div class="col col-lg-3">
       <div class="card">
-        <img class="card-img-top" src="images/rupee.png" alt="">
+        <img class="card-img-top" src="images/flaticon.png" alt="">
         <div class="card-body">
-            <h4 class="card-title">Sell your Projects</h4>
-            <p class="card-text">agram bagram</p>
+            <h4 class="card-title">Icons</h4>
+            <p class="card-text">Search your suitible icons and contribute</p>
+        </div>
+        <div>
+          <form action="" post="GET">
+            <button type="button" class="btn btn-primary">Take me there</button>
+          </form>
         </div>
       </div>
     </div>

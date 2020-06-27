@@ -19,6 +19,8 @@ router.get('/addProd',proController.getAddProduct);
 router.post('/addProd',proController.postAddProduct);
 router.get('/allprojects',proController.getAllProjects);
 
+router.get('/photos',proController.getPhotos);
+
 
 
 // router.get('/user/:userId', userController.getMe);

@@ -32,23 +32,25 @@ body
 }
 a:hover{
   color: white;
+ 
 }
 a:active{
   color: green;
+
 }
 /* a:visited {
   color: purple;
 } */
-.positioning
+/* .positioning
 {
   top: 18rem;
-}
+} */
 .padding-titles
 {
-  padding: 0.5rem;
+  padding: 0.8rem;
 }
 .adding-radius{
-  border-radius: 25px;
+  border-radius: 30px;
 }
 .fixit
 {
@@ -68,7 +70,9 @@ a:active{
   position: relative;
   background-image: url("images/bluedraw.jpg");
   /* background-size: contain; */
-  background-repeat: no-repeat;
+  /* background-repeat: no-repeat; */
+  background-size: cover;
+  
 }
 
 .text1{
@@ -87,9 +91,9 @@ a:active{
 
   margin: 0;
   position: absolute;
-  top: 50%;
+  top: 47%;
   right: 20%;
-  padding: 1rem;;
+  padding: 1.5rem;;
 }
 
 .btn{
@@ -112,11 +116,11 @@ a:active{
 }
 
 h3{
-  color: #6a097d;
+  color:blue;
 }
 .violet
 {
-  color: violet;
+  color:blue;
 }
 .card{
   border: none;
@@ -131,7 +135,7 @@ position: inherit;
 }
 .card{
   align-items: center;
-  color: #6a097d;
+  color: blue;
 }
 .description{
   margin: 2rem;

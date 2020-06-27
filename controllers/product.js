@@ -1,6 +1,7 @@
 const path = require('path');
 const Product = require('../models/products');
 const User = require('../models/users');
+const Photo = require('../models/photos');
 const Session = require('../app.js');
 
 const mongodb = require('mongodb');
@@ -122,6 +123,32 @@ exports.getAllProjects = (req, res, next) => {
       console.log(err);
     });
 };
+
+
+// _______________________________those 4 cards buttons now _______________________________
+
+
+
+exports.getPhotos = (req, res, next) => {
+  const db = getDb();
+  res.render('photos.ejs', {
+    pageTitle: 'Add Photo - Graphic_Mine',
+    currUserId: req.session.currUserId,
+    isAuthed: req.session.isLoggedin
+  });
+};
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //   const db = getDb();       delete  it
