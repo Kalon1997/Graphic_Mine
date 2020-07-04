@@ -6,12 +6,12 @@ const ObjectId = mongodb.ObjectId;
 
 class Photo {
 
-constructor(useridnumber, phototitle, photocolor, photourl)
+constructor(useridnumber, photodetails, photocolor, photourl)
 {
   this.useridnumber = useridnumber;
-  this.phototitle = phototitle;
-  this.photocolor = "photocolor";
-  this.photourl = "photourl";
+  this.photodetails = Array.from(photodetails);
+  this.photocolor = photocolor;
+  this.photourl = photourl;
 }
 
 save() {

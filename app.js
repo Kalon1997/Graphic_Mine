@@ -3,6 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const multer = require('multer');
+const csrf = require('csurf');
 //const MONGODB_URI = 'mongodb+srv://kalon:kalon123@cluster0-t0gzi.mongodb.net/test?retryWrites=true&w=majority';
 
 // const MONGODB_URI = 'mongodb+srv://kalon123:kalon123@cluster0-t0gzi.mongodb.net/ProjectPlatform?retryWrites=true&w=majority';
@@ -54,15 +55,19 @@ const store = new MongoDBStore({
   uri: MONGODB_URI,
   collection: 'sessions'
 });
+
+var bodyParser = require('body-parser');
 const app = express();
-const bodyParser = require('body-parser');
+const csrfProtection = csrf();
 // const helloRoutes = require('./routes/guest/hello.js');
 const userRoutes = require('./routes/user.js');
 const mongoConnect = require('./util/database.js').mongoConnect;
 const User = require('./models/users.js');
 // const Product = require('./models/products.js');
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+
 // app.use(multer({storage: fileStorage, fileFilter: fileFilter }).single('dp')) ///////////////////////////////////////
 
 app.use(
@@ -75,7 +80,7 @@ app.use(express.static(path.join(__dirname, 'imgs')));
 app.use(
   session({secret: 'my secret', resave: false, saveUninitialized: false, store: store })
 );
-
+app.use(csrfProtection);
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -89,6 +94,14 @@ app.set('views', 'views');
 //   .catch(err => console.log(err));
 //   // next();
 // })
+
+app.use((req, res, next) => {
+  res.locals.isAuthed = req.session.isLoggedin;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+})
+
+
 app.use(userRoutes);
 // app.use(helloRoutes);
 

@@ -1,0 +1,29 @@
+.navbar-style {
+    background-image:repeating-linear-gradient(to right, #04b0e2, #01bae6);
+  }
+  
+  .graphicmine-text{
+    font-size: 3rem;
+    color: white;
+    font-weight: bolder;
+  }
+  
+  .nav-link-style
+  {
+    margin: 0;
+    color: blue;
+    font-size: 25px;
+  }
+  
+  a.nav-link-style:hover{
+    color: white;
+   
+  }
+  a.nav-link-style:active{
+    color: green;
+  
+  }
+  /* a:visited {
+    color: purple;
+  } */
+  

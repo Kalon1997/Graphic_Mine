@@ -1,50 +1,4 @@
-body
-{
-  /* background-image:radial-gradient(transparent, violet); */
-  /* background-image: url(images/woodwall.jpg); */
 
-}
-.theme {
-  
-}
-.graphicmine{
-  font-size: 3rem;
-
-  color: white;
-  font-weight: bolder;
-}
-
-.navv {
-  /* background-color: #01bae6; */
-  background-image:repeating-linear-gradient(to right, #04b0e2, #01bae6);
-}
-
-
-.nav-link2
-{
-  margin: 0;
-  color: blue;
-  font-size: 25px;
-}
-.navbar-link{
-  color: blue;
-  font-family: monospace serif sans-serif fantasy;
-}
-a:hover{
-  color: white;
- 
-}
-a:active{
-  color: green;
-
-}
-/* a:visited {
-  color: purple;
-} */
-/* .positioning
-{
-  top: 18rem;
-} */
 .padding-titles
 {
   padding: 0.8rem;
@@ -135,7 +89,7 @@ position: inherit;
 }
 .card{
   align-items: center;
-  color: blue;
+  color:  blue;
 }
 .description{
   margin: 2rem;

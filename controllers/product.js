@@ -140,6 +140,114 @@ exports.getPhotos = (req, res, next) => {
 
 
 
+exports.postAddPhotos = (req, res, next) => {
+  const corspnguserid = req.session.currUserId;
+  const detailstring = req.body.photodetails;
+  const picdetails = detailstring.split(" ");
+  const photocolor = "photocolor";
+  const photourl = "photourl";
+  console.log(picdetails);
+
+
+    const photo = new Photo(corspnguserid, picdetails, photocolor, photourl);
+      photo
+        .save()
+        .then(result => {
+        console.log("New Photo added");
+        res.redirect('/');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+};
+
+
+
+
+exports.showPhotos = (req, res, next) => {
+  // const userId1 = req.params.userId;
+  const userId2 = req.session.currUserId;
+  const db = getDb();
+  return db
+    .collection('photos')
+    .find()
+    .toArray()
+    .then(pic => {
+      res.render('photodisplay.ejs', {
+        prods: pic,
+        pageTitle: 'Photos - Graphic_Mine',
+        currUserId: req.session.currUserId,
+        isAuthed: req.session.isLoggedin
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+// exports.showSearchedPhotos = (req, res, next) => {
+//   // const userId1 = req.params.userId;
+//   const userId2 = req.session.currUserId;
+//   var whole_url = req.url;                       // http...search?=wood+a7
+//   var beforeAfterEqual = whole_url.split("=");   // ['http...search?', 'wood+a7']
+//   var afterEqual = beforeAfterEqual[1];           // wood+a7
+//   var beforeAfterPlus = afterEqual.split("+");  // ['wood', 'a7']
+//   var afterPlus1 = beforeAfterPlus[0];  // wood
+//   var afterPlus2 = beforeAfterPlus[1];  // a7
+
+//   var arr = [];
+
+//   arr.push(beforeAfterPlus[0]);
+//   arr.push(beforeAfterPlus[1]);
+
+
+//   console.log(arr);
+ 
+
+//   const db = getDb();
+//   return db
+//     .collection('photos')
+//     .find({photodetails : arr })
+//     .toArray()
+//     .then(pic => {
+//       res.render('photodisplay.ejs', {
+//         prods: pic,
+//         pageTitle: 'Photos - Graphic_Mine'
+//       });
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// };
+
+
+exports.showSearchedPhotos = (req, res, next) => {
+  // const userId1 = req.params.userId;
+  const userId2 = req.session.currUserId;
+  var wholeUrl = req.url;                         //  http....search?=wood+a7
+  var beforeAfterEqual = wholeUrl.split("=");     //  ['http....search?', 'wood+a7']
+  var beforeAfterPlus =  beforeAfterEqual[1].split("+");  // ['wood', 'a7']
+  console.log(beforeAfterPlus);
+  
+
+// const srch = req.body._parsedOriginalUrl;
+  const db = getDb();
+  return db
+    .collection('photos')
+    .find({photodetails: {$in: beforeAfterPlus }})
+    .toArray()
+    .then(pic => {
+      res.render('photodisplay.ejs', {
+        prods: pic,
+        pageTitle: 'Photos - Graphic_Mine',
+        currUserId: req.session.currUserId,
+        isAuthed: req.session.isLoggedin
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
 
 
 

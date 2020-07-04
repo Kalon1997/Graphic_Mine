@@ -15,7 +15,8 @@ exports.getHome = (req, res, next) => {
   res.render('home.ejs', {
     pageTitle: 'Home - Project_Platform',
     currUserId: req.session.currUserId,
-    isAuthed: req.session.isLoggedin
+    isAuthed: req.session.isLoggedin,
+    csrfToken: req.csrfToken()
   });
 };
 

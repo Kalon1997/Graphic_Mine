@@ -8,66 +8,54 @@
     <!-- __________________________NAVBAR -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="\home.css">
+    <link rel="stylesheet" href="\nav.css">
     <title> <%= pageTitle %> </title>
 
-    <style>
-.theme{
-  /* background-image: url(theme.jpg); */
-}
 
-    </style>
   </head>
   <body>
-    <!-- <div class="theme"> -->
-     <!-- style = "background-color: #e3f2fd;" -->
-    <nav class="navbar navv navbar-expand-sm  ">
-      <a href="/" class="navbar-brand graphicmine">Graphic_Mine</a>
-       <!-- <img src="\images\pplogo.png" class="pplogo" alt="Site logo"> -->
+    <nav class="navbar navbar-expand-sm navbar-style ">
+      <a href="/" class="navbar-brand graphicmine-text">Graphic_Mine</a>
       <button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="menu">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a href="/feed" class="nav-link nav-link2">Feed</a>
+            <a href="/feed" class="nav-link nav-link-style">Feed</a>
           </li>
-
           <li>
-            <a href="/contact" class="nav-link nav-link2">Contact</a>
+            <a href="/contact" class="nav-link nav-link-style">Contact</a>
           </li>
            <% if (!isAuthed) { %>
-
              <li>
-               <a href="/login" class="nav-link nav-link2 ">Login</a>
+               <a href="/login" class="nav-link nav-link-style ">Login</a>
              </li>
-
             <% } else { %>
-
               <li>
-                  <a href="/addProd" class="nav-link nav-link2 ">Add products</a>
+                  <a href="/addProd" class="nav-link nav-link-style ">Add products</a>
               </li>
               <li>
-                <a href="/user/<%= currUserId %>" class="nav-link nav-link2 ">Me</a>
+                <a href="/user/<%= currUserId %>" class="nav-link nav-link-style ">Me</a>
               </li>
-
               <li>
                 <form class="logout" action="/logout" method="post">
-                <button type="submit" method="POST" class="btn btn-primary btn-sm nav-link2">Logout</button>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" method="POST" class="btn btn-primary btn-sm nav-link-style">Logout</button>
                 </form>
               </li>
             <% } %>
-
         </ul>
       <!-- </div> -->
-
     </nav>
 
 <div class="sec_2">
 
-
+  <div>
+    <form action=""></form>
+  </div>
   <div> 
     <span class="text1">Share your graphic creativities with the world!</span>
-
   </div>
 
   <% if (!isAuthed) { %>
@@ -105,12 +93,15 @@
       <div class="card">
         <img class="card-img-top" src="images/flatphoto.png" alt="">
         <div class="card-body">
-            <h4 class="card-title">Photos</h4>
-            <p class="card-text">Search your suitible photos and contribute</p>
+            <h4 class="card-title"> <center>Photos</center> </h4>
+            <p class="card-text"> <center>Search your suitible photos and contribute</center> </p>
         </div>
         <div>
-          <form action="/photos" method="GET">
+          <!-- <form action="/photos" method="GET">
             <button type="submit" class="btn btn-primary">Take me there</button>
+          </form> -->
+          <form action="/showphotos" method="GET">
+            <button type="submit" class="btn btn-primary">show photos</button>
           </form>
         </div>
       </div>
@@ -119,8 +110,8 @@
       <div class="card">
         <img class="card-img-top" src="images/flatcartoon.png" alt="">
         <div class="card-body">
-              <h4 class="card-title">Cartoons</h4>
-            <p class="card-text">Search your suitible cartoons and contribute</p>
+              <h4 class="card-title"> <center>Cartoons</center> </h4>
+            <p class="card-text"> <center>Search your suitible cartoons and contribute</center> </p>
         </div>
         <div>
           <form action="" post="GET">
@@ -133,8 +124,8 @@
       <div class="card">
         <img class="card-img-top" src="images/flatillus.png" alt="">
         <div class="card-body">
-            <h4 class="card-title">Illustrations</h4>
-            <p class="card-text">Search your suitible illustrations and contribute</p>
+            <h4 class="card-title"> <center>Illustrations</center> </h4>
+            <p class="card-text"> <center>Search your suitible illustrations and contribute</center> </p>
         </div>
         <div>
           <form action="" post="GET">
@@ -147,8 +138,8 @@
       <div class="card">
         <img class="card-img-top" src="images/flaticon.png" alt="">
         <div class="card-body">
-            <h4 class="card-title">Icons</h4>
-            <p class="card-text">Search your suitible icons and contribute</p>
+            <h4 class="card-title"> <center>Icons</center> </h4>
+            <p class="card-text"> <center> Search your suitible icons, logos, favicons and contribute</center></p>
         </div>
         <div>
           <form action="" post="GET">
