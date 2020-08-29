@@ -1,27 +1,34 @@
-const User = require('../models/users');
-const Session = require('../app.js');
-
-const mongodb = require('mongodb');
-const getDb = require('../util/database.js').getDb;
 const bcrypt = require('bcryptjs');
+const User = require('../models/users');
+// const Session = require('../app.js');
 
-const ObjectId = mongodb.ObjectId;
+// const mongodb = require('mongodb');
+// const getDb = require('../util/database.js').getDb;
+
+const nodemailer = require('nodemailer');
+const sendGridTransport = require('nodemailer-sendgrid-transport');
+const transporter = nodemailer.createTransport(sendGridTransport({
+  auth: {
+    api_key: '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'
+  }
+ }));
 
 
+// const ObjectId = mongodb.ObjectId;
 
 
 exports.getHome = (req, res, next) => {
-  const db = getDb();
+  // const db = getDb();
   res.render('home.ejs', {
     pageTitle: 'Home - Project_Platform',
     currUserId: req.session.currUserId,
     isAuthed: req.session.isLoggedin,
-    csrfToken: req.csrfToken()
+    successMsg: req.flash('success')
   });
 };
 
 exports.getLogin = (req, res, next) => {
-  console.log(req.session.isLoggedin);
+  // console.log(req.session.isLoggedin);
   res.render('login.ejs', {
     pageTitle: 'Login - Project_Platform',
     isAuthed: false
@@ -42,11 +49,11 @@ exports.getSignup = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
-  //const newPwd = bcrypt.hash(password);
-  const db = getDb();
-    return db
-      .collection('users')
-      .findOne({username: username})
+                              //const newPwd = bcrypt.hash(password);
+  // const db = getDb();
+  //   return db
+  //     .collection('users')
+      User.findOne({username: username})
       .then((existingUser) => {
         if(existingUser)
         {
@@ -56,6 +63,7 @@ exports.postLogin = (req, res, next) => {
               {
                 req.session.isLoggedin = true;
                 req.session.currUserId = existingUser._id;
+                req.flash('success','successfully logged in');
                 res.redirect('/');
               }
               else
@@ -69,14 +77,16 @@ exports.postLogin = (req, res, next) => {
         }
         else
         {
+          req.flash('error','invalid ');
           res.redirect('/signup');
+          
         }
       })
       .catch(err => {
         console.log(err);
       });
-  // req.session.isLoggedin = true;
-  // res.redirect('/');
+                                  // req.session.isLoggedin = true;
+                                  // res.redirect('/');
 };
 
 exports.postSignup = (req, res, next) => {
@@ -87,10 +97,11 @@ exports.postSignup = (req, res, next) => {
   var aboutme = 'crap';
   var skills = 'crap';
   var imgurl = 'images/dp.png';
-  const db = getDb();
-    return db
-    .collection('users')
-    .findOne({ username: username })
+  
+  // const db = getDb();
+  //   return db
+  //   .collection('users')
+    User.findOne({ username: username })
     .then(userDoc => {
       if (userDoc) {
          res.redirect('/signup');
@@ -100,11 +111,25 @@ exports.postSignup = (req, res, next) => {
         bcrypt
           .hash(password, 12)
           .then(hashedPassword => {
-            const user = new User(username, hashedPassword, fname, lname, aboutme, skills, imgurl);
+            const user = new User({
+              username: username,
+              password: hashedPassword,
+              fname: fname,
+              lname: lname,
+              aboutme: aboutme,
+              skills: skills,
+              imgurl: imgurl
+            });
              user.save();
           })
           .then(result => {
             res.redirect('/login');
+            transporter.sendMail({
+              to: username,
+              from: 'kanonwalasonai@gmail.com',
+              subject: 'Registration Successfull',
+              html: '<h1>You successfully signed up!</h1>'
+            });
           });
       }
 
@@ -119,24 +144,24 @@ exports.postLogout = (req, res, next) => {
   res.redirect('/');
 };
 
-exports.getMe = (req, res, next) => {
-  const userId1 = req.params.userId;
-  const userId2 = req.session.currUserId;
-  const db = getDb();
-    return db
-      .collection('users')
-      .findOne({_id: userId2})
-      .then(currentUser => {
-          res.render('me.ejs', {
-          pageTitle: 'Me - Project_Platform',
-          currentUserName: currentUser.username,
-          isAuthed: req.session.isLoggedin
-        });
-      })
-      .catch( err => {
-        console.log(err);
-      });
-};
+// exports.getMe = (req, res, next) => {
+//   const userId1 = req.params.userId;
+//   const userId2 = req.session.currUserId;
+//   const db = getDb();
+//     return db
+//       .collection('users')
+//       .findOne({_id: userId2})
+//       .then(currentUser => {
+//           res.render('me.ejs', {
+//           pageTitle: 'Me - Project_Platform',
+//           currentUserName: currentUser.username,
+//           isAuthed: req.session.isLoggedin
+//         });
+//       })
+//       .catch( err => {
+//         console.log(err);
+//       });
+// };
 
 
 
@@ -146,46 +171,130 @@ exports.getMe = (req, res, next) => {
 
 
 
-exports.getEditProfile = (req, res, next) => {
-  const currentUserId = req.session.currUserId;
-  const db = getDb();
-  return db
-    .collection('users')
-    .findOne({_id: currentUserId})
-    .then(currentUser => {
-      res.render('editProfile.ejs', {
-        pageTitle: 'Edit Profile - Project_Platform',
-        currentUserName: currentUser.username,
-        isAuthed: req.session.isLoggedin
-      });
-    })
+// exports.getEditProfile = (req, res, next) => {
+//   const currentUserId = req.session.currUserId;
+//   const db = getDb();
+//   return db
+//     .collection('users')
+//     .findOne({_id: currentUserId})
+//     .then(currentUser => {
+//       res.render('editProfile.ejs', {
+//         pageTitle: 'Edit Profile - Project_Platform',
+//         currentUserName: currentUser.username,
+//         isAuthed: req.session.isLoggedin
+//       });
+//     })
 
-};
+// };
 
 
-exports.postEditProfile = (req, res, next) => {
-  const currUserId = req.session.currUserId;
-  const aboutme = req.body.aboutme;
-  const skills = req.body.skills;
-  const dp = req.file;
-  const imgurl = dp.path;
-  const db = getDb();
-   return db
-     .collection('users')
-     .updateOne(
-   { _id: currUserId },   // Query parameter
-    {$set: {imgurl: imgurl}},
-   { upsert: true }    // Options
-)
-     .then(result => {
-       req.session.isLoggedin = true;
-       console.log(result);
-       res.redirect('/');
-     })
-     .catch(err => {
-       console.log(err);
-     });
-}
+// exports.postEditProfile = (req, res, next) => {
+//   const currUserId = req.session.currUserId;
+//   const aboutme = req.body.aboutme;
+//   const skills = req.body.skills;
+//   const dp = req.file;
+//   const imgurl = dp.path;
+//   const db = getDb();
+//    return db
+//      .collection('users')
+//      .updateOne(
+//    { _id: currUserId },   // Query parameter
+//     {$set: {imgurl: imgurl}},
+//    { upsert: true }    // Options
+// )
+//      .then(result => {
+//        req.session.isLoggedin = true;
+//        console.log(result);
+//        res.redirect('/');
+//      })
+//      .catch(err => {
+//        console.log(err);
+//      });
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // .updateOne(

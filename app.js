@@ -1,30 +1,35 @@
 const path = require('path');
 const express = require('express');
+const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const multer = require('multer');
-const csrf = require('csurf');
-//const MONGODB_URI = 'mongodb+srv://kalon:kalon123@cluster0-t0gzi.mongodb.net/test?retryWrites=true&w=majority';
+// const csrf = require('csurf');
+const flash = require('connect-flash');
 
-// const MONGODB_URI = 'mongodb+srv://kalon123:kalon123@cluster0-t0gzi.mongodb.net/ProjectPlatform?retryWrites=true&w=majority';
 const MONGODB_URI = 'mongodb+srv://kalon123:kalon123@cluster0-t0gzi.mongodb.net/GraphicMine?retryWrites=true&w=majority';
 
 
-// const fileStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'images');
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, new Date().toISOString() + '-' + file.filename + '-' + file.originalname)
-//   }
-// });
-//
-// const fileFilter = (req, file, cb) => {
-//   if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg')
-//     cb(null, true);
-//   else
-//     cb(null, false);
-// }
+const fileStorage2 = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'imgs');
+  },
+  filename: (req, file, cb) => {
+    // cb(null, new Date().toISOString() + '-' + file.filename + '-' + file.originalname)
+    cb(null, file.originalname );
+  }
+});
+
+const fileFilter2 = (req, file, cb) => {
+  if(
+      file.mimetype === 'photoImage/png' ||
+      file.mimetype === 'photoImage/jpg' ||
+      file.mimetype === 'photoImage/jpeg'
+    )
+    cb(null, true);
+  else
+    cb(null, false);
+}
 
 
 const fileStorage = multer.diskStorage({
@@ -58,7 +63,8 @@ const store = new MongoDBStore({
 
 var bodyParser = require('body-parser');
 const app = express();
-const csrfProtection = csrf();
+// const csrfProtection = csrf();
+
 // const helloRoutes = require('./routes/guest/hello.js');
 const userRoutes = require('./routes/user.js');
 const mongoConnect = require('./util/database.js').mongoConnect;
@@ -71,16 +77,22 @@ app.use(bodyParser.json())
 // app.use(multer({storage: fileStorage, fileFilter: fileFilter }).single('dp')) ///////////////////////////////////////
 
 app.use(
+  multer({ storage: fileStorage2, fileFilter: fileFilter2 }).single('photoImage')
+);
+
+app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
 );
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'imgs')));
+
 // app.use('/public', express.static(path.join(__dirname, 'imgs')));
 app.use(
   session({secret: 'my secret', resave: false, saveUninitialized: false, store: store })
 );
-app.use(csrfProtection);
+// app.use(csrfProtection);
+app.use(flash());
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -95,17 +107,36 @@ app.set('views', 'views');
 //   // next();
 // })
 
-app.use((req, res, next) => {
-  res.locals.isAuthed = req.session.isLoggedin;
-  res.locals.csrfToken = req.csrfToken();
-  next();
-})
+// app.use((req, res, next) => {
+//   res.locals.isAuthed = req.session.isLoggedin;
+//   res.locals.csrfToken = req.csrfToken();
+//   next();
+// })
 
 
 app.use(userRoutes);
 // app.use(helloRoutes);
 
-mongoConnect(() => {
-  // console.log(client);
-  app.listen(3000);
-});
+// mongoConnect(() => {
+//   // console.log(client);
+//   app.listen(3000);
+// });
+// mongoose.connect('mongodb://localhost:3000/GraphicMine-Copy');
+// mongoose
+//   .connect(
+//     'mongodb+srv://kalon123:kalon123@cluster0-t0gzi.mongodb.net/GraphicMine?retryWrites=true&w=majority'
+//   )
+//   .then(result => {
+//     app.listen(3000);
+//   })
+//   .catch(err => {
+//     console.log(err);
+//   });
+
+  mongoose.connect('mongodb+srv://kalon123:kalon123@cluster0-t0gzi.mongodb.net/GraphicMine?retryWrites=true&w=majority', {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
+    .then(result => {
+        app.listen(3000);
+      })
+    .catch(err => {
+        console.log(err);
+      });

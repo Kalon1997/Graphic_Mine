@@ -5,6 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+
+
+    <% if(successMsg) { %>
+  <div> <%= successMsg %> </div>
+  <% } %>
+
     <!-- __________________________NAVBAR -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="\home.css">
@@ -40,7 +46,7 @@
               </li>
               <li>
                 <form class="logout" action="/logout" method="post">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                
                 <button type="submit" method="POST" class="btn btn-primary btn-sm nav-link-style">Logout</button>
                 </form>
               </li>
@@ -97,11 +103,8 @@
             <p class="card-text"> <center>Search your suitible photos and contribute</center> </p>
         </div>
         <div>
-          <!-- <form action="/photos" method="GET">
-            <button type="submit" class="btn btn-primary">Take me there</button>
-          </form> -->
           <form action="/showphotos" method="GET">
-            <button type="submit" class="btn btn-primary">show photos</button>
+            <button type="submit" class="btn btn-primary">Show Photos</button>
           </form>
         </div>
       </div>

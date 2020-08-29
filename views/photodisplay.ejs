@@ -52,6 +52,7 @@ width: 25%;
                 </li>
                 <li>
                   <form class="logout" action="/logout" method="post">
+           
                   <button type="submit" method="POST" class="btn btn-primary btn-sm nav-link-style">Logout</button>
                   </form>
                 </li>
@@ -68,11 +69,15 @@ width: 25%;
         <form action="/searching" method="GET" style="width: 500px; margin: auto" enctype="multipart/form-data">
             <!-- <label class="labels" for="search_bar">Search Bar</label> -->
             <input type="text" name="search_bar" id="search_bar" placeholder="Search..">
+
             <button type="submit" class="btn btn-outline-primary">search</button>
         </form>
+        <% if(isAuthed) { %>
         <form action="/photos" method="GET">
+       
           <button type="submit" class="btn btn-primary">Add photo</button>
         </form>
+       <% } %> 
     </div>
 
     
@@ -87,7 +92,7 @@ width: 25%;
              <% for (let product of prods) { %>
 
                  <div class="card col-lg-3 col-md-2 col-sm-1">
-                  <img width="18%" height="50%" class="card-img-top" src=" <%= product.producturlimage %> " alt="Card image cap">
+                  <img width="18%" height="50%" class="card-img-top" src=" <%= product.photourl %> " alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">  <%= product.photodetails %> </h5>
                             <p class="card-text"> <%= product.photodetails %> </p>

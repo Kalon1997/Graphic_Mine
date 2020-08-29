@@ -39,7 +39,7 @@
                 </li>
                 <li>
                   <form class="logout" action="/logout" method="post">
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                   
                   <button type="submit" method="POST" class="btn btn-primary btn-sm nav-link-style">Logout</button>
                   </form>
                 </li>
@@ -50,6 +50,8 @@
   
 
     <!-- ____________________________Signup form -->
+
+  
 
 
 <form action="/signed_up" method="POST" style="width: 500px; margin: auto">
@@ -74,7 +76,7 @@
     <input type="password" name="password" value="" id="password" class="form-control">
   </div>
   <div class="form-group">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+ 
       <button class="custombtn btn btn-success" type="submit" name="signup">SIGNUP</button>
       <button type="button" class="custombtn2 btn btn-link">forgot password?</button>
   </div>
