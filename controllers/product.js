@@ -1,16 +1,16 @@
 const Photo = require('../models/photos');
 const path = require('path');
-// const Product = require('../models/products');
+            // const Product = require('../models/products');
 const User = require('../models/users');
 
 const Session = require('../app.js');
 
-const mongodb = require('mongodb');
-const getDb = require('../util/database.js').getDb;
+// const mongodb = require('mongodb');
+// const getDb = require('../util/database.js').getDb;
 const bcrypt = require('bcryptjs');
 const { Script } = require('vm');
 
-const ObjectId = mongodb.ObjectId;
+// const ObjectId = mongodb.ObjectId;
 
 
 // exports.getAddProduct = (req, res, next) => {
@@ -130,7 +130,7 @@ const ObjectId = mongodb.ObjectId;
 // _______________________________those 4 cards buttons now _______________________________
 
 exports.getPhotos = (req, res, next) => {
-  const db = getDb();
+  // const db = getDb();
   res.render('photos.ejs', {
     pageTitle: 'Add Photo - Graphic_Mine',
     currUserId: req.session.currUserId,
@@ -145,14 +145,14 @@ exports.postAddPhotos = (req, res, next) => {
   var pd = [];
   pd.push(detailstring);
   pd.push(detailstring);
-  var photocolor = "photocolor";
+  var photoprice = "crap";
   const photourl = "crap";
   // const uploadedphotofile = req.file;
   // const photourl = uploadedphotofile.originalname;
   const photo = new Photo({
     title: corspnguserid,
-    price: detailstring,
-    description: photocolor,
+    desp: pd,
+    price: photoprice,
     imageUrl: photourl
   });
       photo
@@ -172,10 +172,10 @@ exports.postAddPhotos = (req, res, next) => {
 exports.showPhotos = (req, res, next) => {
   // const userId1 = req.params.userId;
   const userId2 = req.session.currUserId;
-  const db = getDb();
-  return db
-    .collection('photos')
-    .find()
+  // const db = getDb();
+  // return db
+    // .collection('photos')
+    Photo.findOne({title: userId2})
     .toArray()
     .then(pic => {
       res.render('photodisplay.ejs', {
@@ -184,9 +184,19 @@ exports.showPhotos = (req, res, next) => {
         currUserId: req.session.currUserId,
         isAuthed: req.session.isLoggedin
       });
+      // res.render('photos.ejs', {
+      //   pageTitle: 'Add Photo - Graphic_Mine',
+      //   currUserId: req.session.currUserId,
+      //   isAuthed: req.session.isLoggedin
+      // });
     })
     .catch(err => {
       console.log(err);
+      res.render('photos.ejs', {
+        pageTitle: 'Add Photo - Graphic_Mine',
+        currUserId: req.session.currUserId,
+        isAuthed: req.session.isLoggedin
+      });
     });
 };
 
@@ -227,7 +237,7 @@ exports.showPhotos = (req, res, next) => {
 
 
 exports.showSearchedPhotos = (req, res, next) => {
-  // const userId1 = req.params.userId;
+                            // const userId1 = req.params.userId;
   const userId2 = req.session.currUserId;
   var wholeUrl = req.url;                         //  http....search?=wood+a7
   var beforeAfterEqual = wholeUrl.split("=");     //  ['http....search?', 'wood+a7']
@@ -235,11 +245,11 @@ exports.showSearchedPhotos = (req, res, next) => {
   console.log(beforeAfterPlus);
   
 
-// const srch = req.body._parsedOriginalUrl;
-  const db = getDb();
-  return db
-    .collection('photos')
-    .find({photodetails: {$in: beforeAfterPlus }})
+                        // const srch = req.body._parsedOriginalUrl;
+  // const db = getDb();
+  // return db
+  //   .collection('photos')
+    Photo.find({photodetails: {$in: beforeAfterPlus }})
     .toArray()
     .then(pic => {
       res.render('photodisplay.ejs', {
@@ -253,6 +263,35 @@ exports.showSearchedPhotos = (req, res, next) => {
       console.log(err);
     });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -337,3 +376,8 @@ exports.showSearchedPhotos = (req, res, next) => {
 //       console.log(err);
 //     });
 // };
+
+
+
+
+// .find({ _id: new mongodb.ObjectId(userId) })
