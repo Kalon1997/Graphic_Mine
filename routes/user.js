@@ -19,7 +19,7 @@ router.post('/logout', userController.postLogout);
 // router.post('/addProd',proController.postAddProduct);
 // router.get('/allprojects',proController.getAllProjects);
 
-router.get('/photos',proController.getPhotos);
+router.get('/photos',proController.getAddPhotos);
 router.post('/addedphotos',proController.postAddPhotos);
 router.get('/showphotos',proController.showPhotos);
 

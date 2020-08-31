@@ -65,6 +65,7 @@ exports.postLogin = (req, res, next) => {
                 req.session.currUserId = existingUser._id;
                 req.flash('success','successfully logged in');
                 res.redirect('/');
+                console.log(username);
               }
               else
               {

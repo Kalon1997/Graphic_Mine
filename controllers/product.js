@@ -129,7 +129,7 @@ const { Script } = require('vm');
 
 // _______________________________those 4 cards buttons now _______________________________
 
-exports.getPhotos = (req, res, next) => {
+exports.getAddPhotos = (req, res, next) => {
   // const db = getDb();
   res.render('photos.ejs', {
     pageTitle: 'Add Photo - Graphic_Mine',
@@ -151,7 +151,8 @@ exports.postAddPhotos = (req, res, next) => {
   // const photourl = uploadedphotofile.originalname;
   const photo = new Photo({
     title: corspnguserid,
-    desp: pd,
+    //$push: { desp: pd  },
+    desp: Array.from(pd),
     price: photoprice,
     imageUrl: photourl
   });
@@ -160,6 +161,7 @@ exports.postAddPhotos = (req, res, next) => {
         .then(result => {
         console.log("New Photo added");
         res.redirect('/');
+        console.log(detailstring);
       })
       .catch(err => {
         console.log(err);
@@ -172,11 +174,13 @@ exports.postAddPhotos = (req, res, next) => {
 exports.showPhotos = (req, res, next) => {
   // const userId1 = req.params.userId;
   const userId2 = req.session.currUserId;
+  // const userId3 = new mongodb.ObjectId(userId);
   // const db = getDb();
   // return db
     // .collection('photos')
-    Photo.findOne({title: userId2})
-    .toArray()
+     //{title: userId2}
+     console.log(userId2);
+    Photo.findOne({ title: userId2 })  
     .then(pic => {
       res.render('photodisplay.ejs', {
         prods: pic,

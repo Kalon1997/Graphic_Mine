@@ -4,7 +4,7 @@ const productSchema = new Schema({
   title: {
     type: String
   },
-  desp: [{type: String}],
+  desp: [String],
   price: {
     type: String
   },

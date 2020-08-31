@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+var bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
@@ -61,8 +62,9 @@ const store = new MongoDBStore({
   collection: 'sessions'
 });
 
-var bodyParser = require('body-parser');
+
 const app = express();
+app.use(bodyParser());
 // const csrfProtection = csrf();
 
 // const helloRoutes = require('./routes/guest/hello.js');
@@ -71,8 +73,10 @@ const mongoConnect = require('./util/database.js').mongoConnect;
 const User = require('./models/users.js');
 // const Product = require('./models/products.js');
 
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+// app.end(JSON.stringify(req.body));
+
 
 // app.use(multer({storage: fileStorage, fileFilter: fileFilter }).single('dp')) ///////////////////////////////////////
 
