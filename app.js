@@ -10,58 +10,31 @@ const flash = require('connect-flash');
 
 const MONGODB_URI = 'mongodb+srv://kalon123:kalon123@cluster0-t0gzi.mongodb.net/GraphicMine?retryWrites=true&w=majority';
 
-
-const fileStorage2 = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'imgs');
-  },
-  filename: (req, file, cb) => {
-    // cb(null, new Date().toISOString() + '-' + file.filename + '-' + file.originalname)
-    cb(null, file.originalname );
-  }
-});
-
-const fileFilter2 = (req, file, cb) => {
-  if(
-      file.mimetype === 'photoImage/png' ||
-      file.mimetype === 'photoImage/jpg' ||
-      file.mimetype === 'photoImage/jpeg'
-    )
-    cb(null, true);
-  else
-    cb(null, false);
-}
-
-
-const fileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'imgs');
-  },
-  filename: (req, file, cb) => {
-    // cb(null, new Date().toISOString() + '-' + file.filename + '-' + file.originalname);
-      cb(null, file.originalname );
-  }
-});
-
-const fileFilter = (req, file, cb) => {
-  if (
-     file.mimetype === 'image/png' ||
-     file.mimetype === 'image/jpg' ||
-     file.mimetype === 'image/jpeg'
-   ) {
-     cb(null, true);
-   } else {
-     cb(null, false);
-   }
-}
-
-
-
 const store = new MongoDBStore({
   uri: MONGODB_URI,
   collection: 'sessions'
 });
 
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'photoss');
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  if(file.mimetype === 'photoImage/png' ||
+     file.mimetype === 'photoImage/jpg' ||
+      file.mimetype === 'photoImage/jpeg') 
+  {
+    cb(null, true);
+  }
+  else {
+    cb(null, false);
+  }
+};
 
 const app = express();
 app.use(bodyParser());
@@ -77,16 +50,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(bodyParser.json());
 // app.end(JSON.stringify(req.body));
 
+app.use(multer({storage: fileStorage}).single('photoImage'))
+//  app.use(multer({storage: fileStorage, fileFilter: fileFilter }).single('dp')) ///////////////////////////////////////
 
-// app.use(multer({storage: fileStorage, fileFilter: fileFilter }).single('dp')) ///////////////////////////////////////
 
-app.use(
-  multer({ storage: fileStorage2, fileFilter: fileFilter2 }).single('photoImage')
-);
-
-app.use(
-  multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
-);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'imgs')));

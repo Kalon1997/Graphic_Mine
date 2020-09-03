@@ -146,12 +146,10 @@ exports.postAddPhotos = (req, res, next) => {
   pd.push(detailstring);
   pd.push(detailstring);
   var photoprice = "crap";
-  const photourl = "crap";
-  // const uploadedphotofile = req.file;
-  // const photourl = uploadedphotofile.originalname;
+  // const photourl = req.body.photoImage;
+  const photourl = req.file;
   const photo = new Photo({
     title: corspnguserid,
-    //$push: { desp: pd  },
     desp: Array.from(pd),
     price: photoprice,
     imageUrl: photourl
@@ -161,6 +159,7 @@ exports.postAddPhotos = (req, res, next) => {
         .then(result => {
         console.log("New Photo added");
         res.redirect('/');
+        console.log(photourl);
         console.log(detailstring);
       })
       .catch(err => {
@@ -180,19 +179,14 @@ exports.showPhotos = (req, res, next) => {
     // .collection('photos')
      //{title: userId2}
      console.log(userId2);
-    Photo.findOne({ title: userId2 })  
-    .then(pic => {
+     Photo.find({ title: userId2 })  
+     .then(pic => {
       res.render('photodisplay.ejs', {
         prods: pic,
         pageTitle: 'Photos - Graphic_Mine',
         currUserId: req.session.currUserId,
         isAuthed: req.session.isLoggedin
       });
-      // res.render('photos.ejs', {
-      //   pageTitle: 'Add Photo - Graphic_Mine',
-      //   currUserId: req.session.currUserId,
-      //   isAuthed: req.session.isLoggedin
-      // });
     })
     .catch(err => {
       console.log(err);
@@ -254,7 +248,6 @@ exports.showSearchedPhotos = (req, res, next) => {
   // return db
   //   .collection('photos')
     Photo.find({photodetails: {$in: beforeAfterPlus }})
-    .toArray()
     .then(pic => {
       res.render('photodisplay.ejs', {
         prods: pic,
