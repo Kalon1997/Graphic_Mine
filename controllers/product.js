@@ -147,12 +147,12 @@ exports.postAddPhotos = (req, res, next) => {
   pd.push(detailstring);
   var photoprice = "crap";
   // const photourl = req.body.photoImage;
-  const photourl = req.file;
+  const photoImage = req.file;
   const photo = new Photo({
     title: corspnguserid,
     desp: Array.from(pd),
     price: photoprice,
-    imageUrl: photourl
+    imageUrl: photoImage.originalname
   });
       photo
         .save()
