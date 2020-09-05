@@ -143,10 +143,11 @@ exports.postAddPhotos = (req, res, next) => {
   const corspnguserid = req.session.currUserId;
   const detailstring = req.body.photodetails;
   var pd = [];
-  pd.push(detailstring);
-  pd.push(detailstring);
+  pd = detailstring.split(" ");
+  // pd.push(detailstring);
+  // pd.push(detailstring);
   var photoprice = "crap";
-  // const photourl = req.body.photoImage;
+   // const photourl = req.body.photoImage;
   const photoImage = req.file;
   const photo = new Photo({
     title: corspnguserid,
@@ -240,14 +241,13 @@ exports.showSearchedPhotos = (req, res, next) => {
   var wholeUrl = req.url;                         //  http....search?=wood+a7
   var beforeAfterEqual = wholeUrl.split("=");     //  ['http....search?', 'wood+a7']
   var beforeAfterPlus =  beforeAfterEqual[1].split("+");  // ['wood', 'a7']
-  console.log(beforeAfterPlus);
-  
+  // var searchword = req.search_bar.split(" ");
 
                         // const srch = req.body._parsedOriginalUrl;
   // const db = getDb();
   // return db
   //   .collection('photos')
-    Photo.find({photodetails: {$in: beforeAfterPlus }})
+    Photo.find({desp: {$in: beforeAfterPlus }})
     .then(pic => {
       res.render('photodisplay.ejs', {
         prods: pic,
